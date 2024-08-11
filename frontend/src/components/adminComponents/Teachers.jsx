@@ -26,6 +26,7 @@ function Teachers() {
             <CgProfile className="text-[34px] " />
             {/* name */}
             <p className="text-[18px]">Lecturer Name</p>
+            <p className="text-[18px]">Lecturer Id</p>
           </div>
 
           {/* buttons */}
@@ -47,6 +48,7 @@ function Teachers() {
             <CgProfile className="text-[34px] " />
             {/* name */}
             <p className="text-[18px]">Lecturer Name</p>
+            <p className="text-[18px]">Lecturer Id</p>
           </div>
 
           {/* buttons */}
@@ -67,6 +69,7 @@ function Teachers() {
             <CgProfile className="text-[34px] " />
             {/* name */}
             <p className="text-[18px]">Lecturer Name</p>
+            <p className="text-[18px]">Lecturer Id</p>
           </div>
 
           {/* buttons */}
@@ -87,6 +90,7 @@ function Teachers() {
             <CgProfile className="text-[34px] " />
             {/* name */}
             <p className="text-[18px]">Lecturer Name</p>
+            <p className="text-[18px]">Lecturer Id</p>
           </div>
 
           {/* buttons */}
@@ -107,6 +111,7 @@ function Teachers() {
             <CgProfile className="text-[34px] " />
             {/* name */}
             <p className="text-[18px]">Lecturer Name</p>
+            <p className="text-[18px]">Lecturer Id</p>
           </div>
 
           {/* buttons */}
