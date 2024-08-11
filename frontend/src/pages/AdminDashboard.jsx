@@ -4,14 +4,14 @@ import { GiGraduateCap } from "react-icons/gi";
 import { IoMdBook } from "react-icons/io";
 import { LuCalendarSearch } from "react-icons/lu";
 import { IoExitOutline } from "react-icons/io5";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 function AdminDashboard() {
   return (
     // main div
-    <div className="flex flex-col">
+    <div className="flex flex-row">
       {/* left side */}
-      <div className="w-[313px] h-[910px] bg-slate-300">
+      <div className="w-[313px] h-[911px] bg-slate-300">
         {/* app name */}
         <p className="text-[35px] font-[600] ml-[40px] mt-[20px]">TimeSync.</p>
 
@@ -25,22 +25,22 @@ function AdminDashboard() {
 
         {/* components */}
         <div className="flex flex-col gap-10 text-[18px]  ml-[40px] mt-[120px]">
-          <button className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl">
+          <Link to="/admin-dashboard" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl">
             {" "}
             <RxDashboard /> Dashboard
-          </button>
-          <button className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
+          </Link>
+          <Link to="/admin-dashboard/teachers" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
             {" "}
             <GiGraduateCap /> Teachers
-          </button>
-          <button className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
+          </Link>
+          <Link to="/admin-dashboard/students" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
             {" "}
             <IoMdBook /> Students
-          </button>
-          <button className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
+          </Link>
+          <Link to="/admin-dashboard/time-tables" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
             {" "}
-            <LuCalendarSearch /> Timetable
-          </button>
+            <LuCalendarSearch /> Timetables
+          </Link>
         </div>
 
         {/* exit button */}

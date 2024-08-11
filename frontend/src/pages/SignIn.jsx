@@ -6,7 +6,7 @@ function SignIn() {
   return (
     <>
     {/* background image */}
-    <div  className="absolute z-0 w-full h-[1080px]">
+    <div  className="absolute z-0 w-full h-[911px]">
       <img src={bg} alt="Background Image" className="w-full h-full"/>
     </div>
 

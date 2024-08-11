@@ -5,6 +5,10 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import SignIn from './pages/SignIn.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
+import Dashboard from './components/adminCoponents/Dashboard.jsx'
+import Teachers from './components/adminCoponents/Teachers.jsx'
+import Students from './components/adminCoponents/Students.jsx'
+import TimeTables from './components/adminCoponents/TimeTables.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,7 +22,24 @@ const router = createBrowserRouter([
       {
         path:"/admin-dashboard",
         element:<AdminDashboard/>,
-        children:[]
+        children:[
+          {
+            path:"/admin-dashboard",
+            element:<Dashboard/>
+          },
+          {
+            path:"/admin-dashboard/teachers",
+            element:<Teachers/>
+          },
+          {
+            path:"/admin-dashboard/students",
+            element:<Students/>
+          },
+          {
+            path:"/admin-dashboard/time-tables",
+            element:<TimeTables/>
+          },
+        ]
       },
       {
         path:"/student-dashboard",
