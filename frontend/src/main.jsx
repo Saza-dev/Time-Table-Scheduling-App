@@ -9,6 +9,14 @@ import Dashboard from "./components/adminComponents/Dashboard.jsx";
 import Teachers from "./components/adminComponents/Teachers.jsx";
 import Students from "./components/adminComponents/Students.jsx";
 import TimeTables from "./components/adminComponents/TimeTables.jsx";
+import AdminDashboardSubContainer from "./components/adminComponents/AdminDashboardSubContainer.jsx";
+import AddTeacher from "./Forms/Admin/AddTeacher.jsx";
+import AddStudent from "./Forms/Admin/AddStudent.jsx";
+import AddModule from "./Forms/Admin/AddModule.jsx";
+import AddBatch from "./Forms/Admin/AddBatch.jsx";
+import AddLectureHall from "./Forms/Admin/AddLectureHall.jsx";
+import AddCustomTime from "./Forms/Admin/AddCustomTime.jsx";
+import Profile from "./components/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,24 +28,58 @@ const router = createBrowserRouter([
         element: <SignIn />,
       },
       {
-        path: "/admin-dashboard",
+        path: "/admin",
         element: <AdminDashboard />,
         children: [
           {
-            path: "/admin-dashboard",
+            path: "/admin/admin-dashboard",
             element: <Dashboard />,
+            children: [
+              {
+                path: "/admin/admin-dashboard/dashboard",
+                element: <AdminDashboardSubContainer />,
+              },
+              {
+                path: "/admin/admin-dashboard/add-teacher",
+                element: <AddTeacher />,
+              },
+              {
+                path: "/admin/admin-dashboard/add-student",
+                element: <AddStudent />,
+              },
+              {
+                path: "/admin/admin-dashboard/add-module",
+                element: <AddModule />,
+              },
+              {
+                path: "/admin/admin-dashboard/add-batch",
+                element: <AddBatch />,
+              },
+              {
+                path: "/admin/admin-dashboard/add-lec-hall",
+                element: <AddLectureHall />,
+              },
+              {
+                path: "/admin/admin-dashboard/add-custom-timeslot",
+                element: <AddCustomTime />,
+              },
+            ],
           },
           {
-            path: "/admin-dashboard/teachers",
+            path: "/admin/teachers",
             element: <Teachers />,
           },
           {
-            path: "/admin-dashboard/students",
+            path: "/admin/students",
             element: <Students />,
           },
           {
-            path: "/admin-dashboard/time-tables",
+            path: "/admin/time-tables",
             element: <TimeTables />,
+          },
+          {
+            path: "/admin/profile",
+            element: <Profile />,
           },
         ],
       },

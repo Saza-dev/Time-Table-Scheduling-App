@@ -25,19 +25,19 @@ function AdminDashboard() {
 
         {/* components */}
         <div className="flex flex-col gap-10 text-[18px]  ml-[40px] mt-[120px]">
-          <Link to="/admin-dashboard" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl">
+          <Link to="/admin/admin-dashboard/dashboard" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl">
             {" "}
             <RxDashboard /> Dashboard
           </Link>
-          <Link to="/admin-dashboard/teachers" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
+          <Link to="/admin/teachers" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
             {" "}
-            <GiGraduateCap /> Teachers
+            <GiGraduateCap /> Lecturers
           </Link>
-          <Link to="/admin-dashboard/students" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
+          <Link to="/admin/students" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
             {" "}
             <IoMdBook /> Students
           </Link>
-          <Link to="/admin-dashboard/time-tables" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
+          <Link to="/admin/time-tables" className="flex flex-row justify-center items-center gap-2 w-[241px] h-[45px] hover:bg-[#FFFFFF] rounded-[6px] hover:shadow-2xl ">
             {" "}
             <LuCalendarSearch /> Timetables
           </Link>
@@ -45,8 +45,9 @@ function AdminDashboard() {
 
         {/* exit button */}
         <button className="text-[30px] mt-[150px] ml-[45px]">
-          <IoExitOutline />
+          <Link to="/"><IoExitOutline /></Link>
         </button>
+        
       </div>
 
       {/* right div */}
