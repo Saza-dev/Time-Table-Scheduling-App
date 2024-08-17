@@ -3,21 +3,30 @@ import { DataTypes } from "sequelize"
 
 const timeTable = sequelize.define("timeTable",{
 
-    timeTableId: {
+      timeTableId: {
         primaryKey: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement:true,
+      },
+      Day: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      timeSlot: {
-        type: DataTypes.DATE,
+      From: {
+        type: DataTypes.TIME,
+        allowNull: false,
+      },
+      To: {
+        type: DataTypes.TIME,
         allowNull: false,
       },
       batchId:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull:false,
       },
       lecturerId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       moduleId: {
@@ -25,6 +34,10 @@ const timeTable = sequelize.define("timeTable",{
         allowNull: false,
       },
       hallId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      department: {
         type: DataTypes.STRING,
         allowNull: false,
       }

@@ -5,21 +5,31 @@ import Student from '../models/studentModel.js'
 // add a Student
 const addStudent = asyncHandler(async(req,res)=>{
 
-    const {studentId, name, department,  contactDetails,batchId} = req.body;
+    const { stuID, stuName, dep,  contact, batchID} = req.body;
+
+    console.log(req.body)
 
     const newStudent = Student.build({
-        'studentId':studentId,
-        'name': name,
-        'department': department,
-        'contactDetails':  contactDetails,
-        'batchId':batchId
+        'studentId':stuID,
+        'name':stuName,
+        'department': dep,
+        'contactDetails':  contact,
+        'batchId':batchID
     })
 
     try {
         await newStudent.save();
-        res.status(201).json(newStudent);
+        res.status(200).json({
+            success: true,
+            message: "Student added successfully",
+            data: newStudent,
+          });
     } catch (error) {
-        res.json(error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to add Student Details",
+            error: error.message,
+          });
     }
 })
 
@@ -79,18 +89,45 @@ res.status(200).json(student);
 // delete a student
 const deleteAStudent = asyncHandler(async(req,res)=>{
 
-const studentId = req.params._id; 
+const studentId = req.params.id; 
 
-const student = await Student.findOne({
-    where: {
-        studentId: studentId
+if (!studentId) {
+    return res.status(400).json({ message: "Student ID is required" });
+  }
+
+  try {
+    const student = await Student.findOne({
+      where: {
+        studentId: studentId,
+      },
+    });
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
     }
+
+    await student.destroy();
+    res.status(204).send();
+  } catch (error) {
+    console.error("Error deleting student:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+
 })
 
-await student.destroy();
 
-res.status(204).json({message: 'student deleted'});
+// get students sorting dep and batch
+const getSortedStudents = asyncHandler(async(req,res)=>{
+    const { dep, batchID } = req.query.data
+    
+    const students = await Student.findAll({
+        where: {
+            batchId: batchID,
+            department:dep
+        }
+    })
+    res.json(students)
 })
 
 
-export {addStudent,getAllStudents,getAStudent,updateAStudent,deleteAStudent};
+export {addStudent,getAllStudents,getAStudent,updateAStudent,deleteAStudent,getSortedStudents};

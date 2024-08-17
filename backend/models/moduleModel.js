@@ -21,9 +21,13 @@ const Module = sequelize.define("Module",{
 
     },
     lectureid:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.STRING,
         allowNull:false  
-    }
+    },
+    batchid:{
+      type:DataTypes.STRING,
+      allowNull:false  
+  }
 
 })
 

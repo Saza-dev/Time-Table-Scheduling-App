@@ -11,7 +11,7 @@ function AdminDashboard() {
     // main div
     <div className="flex flex-row">
       {/* left side */}
-      <div className="w-[313px] h-[911px] bg-slate-300">
+      <div className="w-[313px]  h-[945px] bg-slate-300">
         {/* app name */}
         <p className="text-[35px] font-[600] ml-[40px] mt-[20px]">TimeSync.</p>
 

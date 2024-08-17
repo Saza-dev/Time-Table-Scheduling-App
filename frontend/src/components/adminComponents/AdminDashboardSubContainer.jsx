@@ -1,5 +1,76 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from "axios";
+import { Bounce, toast} from "react-toastify";
+import * as apiClient from "../../api-client"
+
+
+const handleClick = async () => {
+  try {
+    // Perform API request (replace with your actual endpoint and data)
+    const response = await axios.get('http://localhost:5000/api/v1/timeTable/generate-timetable');
+    
+    let data = response.data
+
+    let totalSlots = data.length;
+    let completedSlots = 0;
+
+
+    for (const entry of data) {
+      console.log(entry)
+
+      const [day, time] = entry.timeslot.split(' ');
+      const [hour, minute] = time.split('.');
+    
+      const fromTime = `${hour.padStart(2, '0')}:${minute.padEnd(2, '0')}:00`; // Example: "13:00:00"
+      const toTime = `${String(Number(hour) + 1).padStart(2, '0')}:${minute.padEnd(2, '0')}:00`; // Example: "14:00:00"
+
+      let values = {
+        day: day,
+        from: fromTime,
+        to: toTime,
+        batchID: entry.batch,
+        lecID: entry.lecturer,
+        moduleID: entry.moduleName, 
+        hallID: entry.hallName,
+        dep: entry.department,
+      }
+
+      try {
+        const response = await apiClient.addTimeSlot(values);
+        completedSlots += 1;
+
+        if (completedSlots === totalSlots) {
+          toast.info("All time slots added successfully", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          })}
+      
+
+      } catch (error) {
+        console.error('Error sending data:', error);
+      }
+
+    }
+    
+   
+    
+
+
+} catch (error) {
+    // Show error toast with the error message
+    toast.error(`Failed to create schedules: ${error.message}`);
+}
+};
+
+
 
 function AdminDashboardSubContainer() {
   return (
@@ -75,7 +146,7 @@ function AdminDashboardSubContainer() {
     </div>
             {/* schedule button */}
             <div className="flex w-[1400px] h-[150px] items-center justify-center">
-            <button className="w-[200px] h-[60px] bg-[#3482F7] text-white rounded-[6px] text-[20px] font-[700]">
+            <button onClick={handleClick} className="w-[200px] h-[60px] bg-[#3482F7] text-white rounded-[6px] text-[20px] font-[700]">
                 Schedule
             </button>
       </div>

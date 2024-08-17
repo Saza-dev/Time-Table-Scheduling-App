@@ -5,20 +5,28 @@ import Student from "../models/studentModel.js";
 // add a Batch
 const addBatch = asyncHandler(async(req,res)=>{
 
-    const {batchId, year, noOfStudents,  department} = req.body;
+    const {batchID, year, numStudents,  dep} = req.body;
 
     const newBatch = Batch.build({
-        'batchId':batchId,
+        'batchId':batchID,
         'year': year,
-        'noOfStudents':  noOfStudents,
-        'department': department
+        'noOfStudents':  numStudents,
+        'department': dep
     })
 
     try {
         await newBatch.save();
-        res.status(201).json(newBatch);
+        res.status(200).json({
+            success: true,
+            message: "Batch added successfully",
+            data: newBatch,
+          });
     } catch (error) {
-        res.json(error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to add Batch Details",
+            error: error.message,
+          });
     }
 })
 
@@ -97,7 +105,12 @@ const deleteABatch = asyncHandler(async(req,res)=>{
     res.status(204).json({message: 'batch deleted'});
 })
 
+// get only batch IDs
+const getAllBatchIDs = asyncHandler(async(req,res)=>{
+    const batches = await Batch.findAll();
+    const batchIds = batches.map(batch => batch.dataValues.batchId);
+    res.json(batchIds)
+})
 
 
-
-export {addBatch,getAllBatches,getABatch,updateABatch,deleteABatch }
+export {addBatch,getAllBatches,getABatch,updateABatch,deleteABatch,getAllBatchIDs }

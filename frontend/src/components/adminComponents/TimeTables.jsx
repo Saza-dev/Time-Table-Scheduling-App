@@ -1,8 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
-import SelectTimeTables from "../../Forms/Admin/SelectTimeTables";
+import SubTimeTable from "./SubTimeTable";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import * as apiClient from "../../api-client";
+
+let schema = yup.object().shape({
+  batchID: yup.string(),
+  dep: yup.string(),
+  lecID: yup.string()
+});
+
+
 
 function TimeTables() {
+
+
+  let [data,setData] = useState([])
+  let [batchIDs, setBatchIDs] = useState([]);
+
+  useEffect (() => {
+    const fetchBatches = async () => {
+      try {
+        const x = await apiClient.getBatchesIDs();
+        setBatchIDs(x);
+      } catch (error) {
+        console.error("Failed to fetch batches:", error);
+      }
+    };
+
+    fetchBatches();
+  }, []);
+
+  
+  const formik = useFormik({
+    initialValues: {
+      batchID: "",
+      dep: "",
+      lecID: ""
+    },
+    validationSchema: schema,
+    onSubmit: async (values) => {
+      const response = await apiClient.getTimetableData(values);
+      setData(response)
+    },
+  });
+
+  
+
   return (
     <div className="ml-[60px]">
       {/* Heading */}
@@ -13,47 +58,76 @@ function TimeTables() {
         </button>
       </div>
 
-      <SelectTimeTables />
+      <div className="w-[900px] h-[110px] mt-[90px]">
+        <form onSubmit={formik.handleSubmit} className="flex items-center justify-between">
+          <div className="flex gap-10">
+            {/* Department */}
+            <select
+              id="options"
+              name="dep"
+              value={formik.values.dep}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+             className="block w-[300px] py-2 pl-3 pr-10 mt-1 text-base border-[1px] border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              <option value="" disabled>
+                Department
+              </option>
+              <option value="Faculty of Computing and IT">
+                Faculty of Computing and IT
+              </option>
+              <option value="Faculty Of Engineering">
+                Faculty Of Engineering
+              </option>
+              <option value="Faculty of Technology">
+                Faculty of Technology
+              </option>
+            </select>
 
-      {/* timetable */}
+            {/* Batch */}
 
-      <div className="flex flex-col gap-5">
-        {/* Days */}
-        <div className="flex w-[1150px] h-[120px] border-[1px] border-[#1E1E1E33] rounded-[12px] gap-[80px] items-center justify-center text-[20px] font-[500]">
-          <button className="w-[100px] h-[100px] border-[1px] rounded-[15px] hover:bg-[#3482F7] hover:text-white">
-            Mon
-          </button>
-          <button className="w-[100px] h-[100px] border-[1px] rounded-[15px] hover:bg-[#3482F7] hover:text-white">
-            Tue
-          </button>
-          <button className="w-[100px] h-[100px] border-[1px] rounded-[15px] hover:bg-[#3482F7] hover:text-white">
-            Wed
-          </button>
-          <button className="w-[100px] h-[100px] border-[1px] rounded-[15px] hover:bg-[#3482F7] hover:text-white">
-            Thu
-          </button>
-          <button className="w-[100px] h-[100px] border-[1px] rounded-[15px] hover:bg-[#3482F7] hover:text-white">
-            Fri
-          </button>
-        </div>
+            <select
+              id="options"
+              name="batchID"
+              value={formik.values.batchID}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="block w-[300px] py-2 pl-3 pr-10 mt-1 text-base border-[1px] border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              <option value="" disabled>
+                Batch ID
+              </option>
+              {batchIDs.map((batchID) => (
+                <option key={batchID} value={batchID}>
+                  {batchID}
+                </option>
+              ))}
+            </select>
 
-        {/* Data */}
-        <div className="w-[1150px] flex items-start justify-center">
-          <div className="w-[1000px] h-[470px] border-[1px] border-[#1E1E1E33] rounded-[12px] grid grid-cols-4 items-center gap-5 pl-[50px] overflow-y-auto">
-            {/* card*/}
-            <div className="w-[170px] h-[190px] bg-[#92dbdb80] flex gap-5 flex-col pt-5">
-              <div className="flex flex-col text-center text-[18px]">
-                <p className=" font-[500] ">Module Name</p>
-                <p>Lecture Hall</p>
-              </div>
-              <div className="flex flex-col gap-3 text-center">
-                <p>Time</p>
-                <p>Lecturer Name</p>
-              </div>
-            </div>
+            {/* Lecture ID */}
+            <input
+              type="text"
+              name="lecID"
+              value={formik.values.lecID}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="w-[300px] py-2 pl-3 pr-10 mt-1 text-base border-[1px] border-gray-300 rounded-md"
+              placeholder="Lecturer Id"
+            />
           </div>
-        </div>
+
+          <div>
+            <button
+              type="submit"
+              className="w-[92px] h-[32px] bg-[#3482F7] text-white rounded-[6px] text-[16px] font-[700] ml-[80px]"
+            >
+              Show
+            </button>
+          </div>
+        </form>
       </div>
+
+      <SubTimeTable timeslots={data} />
     </div>
   );
 }

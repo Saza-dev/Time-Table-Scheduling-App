@@ -4,21 +4,29 @@ import LectureHall from "../models/lecHallModel.js"
 // add a lec hall
 const addLecHall = asyncHandler(async(req,res)=>{
 
-    const {id, name, seating_capacity, facilities, Availability} = req.body;
+    const {hallID, hallName, capacity, facilities,} = req.body;
 
     const newLecHall = LectureHall.build({
-        'id': id,
-        'name': name,
-        'seating_capacity': seating_capacity,
+        'id': hallID,
+        'name': hallName,
+        'seating_capacity': capacity,
         'facilities': facilities,
-        'Availability':Availability
+        'Availability': true
     })
 
     try {
         await newLecHall.save();
-        res.status(201).json(newLecHall);
+        res.status(200).json({
+            success: true,
+            message: "Batch added successfully",
+            data: newLecHall,
+          });
     } catch (error) {
-        res.json(error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to add Lecture hall",
+            error: error.message,
+          })
     }
 })
 
@@ -26,6 +34,7 @@ const addLecHall = asyncHandler(async(req,res)=>{
 const getAllLecHalls = asyncHandler(async(req,res)=>{
 
         const lecHalls = await LectureHall.findAll();
+        console.log(lecHalls)
         res.json(lecHalls)
 })
 

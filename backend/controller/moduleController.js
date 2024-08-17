@@ -1,25 +1,35 @@
 import asyncHandler from "express-async-handler";
 import moduleModel from "../models/moduleModel.js"
+import batch from "../models/batchModel.js";
+import lecturer from "../models/lecturerModel.js"
 
 //add a module
 const addModule = asyncHandler(async(req,res)=>{
-    const {moduleid, name, department, credits,lectureid} = req.body;
+    const {moduleID,  moduleName, dep, credits,lecID, batchID} = req.body;
 
     const newModule = moduleModel.build({
-        'moduleid': moduleid,
-        'name': name,
-        'department' : department,
+        'moduleid': moduleID,
+        'name':  moduleName,
+        'department' : dep,
         'credits' : credits,
-        'lectureid': lectureid
-
-      
+        'lectureid': lecID,
+        'batchid': batchID
     })
 
     try {
         await newModule.save();
-        res.status(201).json(newModule);
+        res.status(200).json({
+            success: true,
+            message: "Module added successfully",
+            data: newModule,
+          });
     } catch (error) {
-        res.json(error);
+        console.log(error)
+        res.status(500).json({
+            success: false,
+            message: "Failed to add Module Details",
+            error: error.message,
+          });
     }
 })
 
@@ -73,6 +83,9 @@ const updateModule = asyncHandler(async(req,res)=>{
     if (req.body.lectureid !== undefined) {
         updatedFields.lectureid = req.body.lectureid;
     }
+    if (req.body.batchid !== undefined) {
+        updatedFields.batchid = req.body.batchid;
+    }
 
    
 
@@ -102,4 +115,19 @@ const deletemodule = asyncHandler(async(req,res)=>{
 })
 
 
-export {addModule,allModule,getAModule,updateModule,deletemodule}
+// data from other tables
+const lecIDs_Batch_IDs = asyncHandler(async(req,res)=>{
+
+
+    const lecturers = await lecturer.findAll();
+    const batches = await batch.findAll();
+    const data = {
+        lecturers: lecturers.map(lecturer => lecturer.dataValues.lecid),
+        batches: batches.map(batch => batch.dataValues.batchId)
+    }
+
+    res.json(data);
+})
+
+
+export {addModule,allModule,getAModule,updateModule,deletemodule, lecIDs_Batch_IDs}

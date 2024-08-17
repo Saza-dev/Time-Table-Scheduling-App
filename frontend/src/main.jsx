@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import SignIn from "./pages/SignIn.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import Dashboard from "./components/adminComponents/Dashboard.jsx";
@@ -100,5 +102,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <ToastContainer/>
   </React.StrictMode>
 );
