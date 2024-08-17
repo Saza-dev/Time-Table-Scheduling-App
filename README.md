@@ -27,7 +27,7 @@ Welcome to the Timetable Scheduling App! This project is a full-stack web applic
   - Express.js
   - cors 
   - express-async-handler
-  
+
 - **Database**:
   - SQL
   - Sequelize ORM
@@ -53,19 +53,26 @@ Welcome to the Timetable Scheduling App! This project is a full-stack web applic
 
 2. Install dependencies:
 
+    ```bash
    cd timetable-scheduling-app
    npm install
+   ```
 
 3. Set up the database:
 
-   Create a new SQL database.
-   Update the .env file with your database credentials.
-   DB_NAME=yourdbname
-   DB_USER=yourdbuser
-   DB_PASS=yourdbpassword
-   DB_HOST=yourdbhost
-   DB_DIALECT=yourdbdialect
+  - Create a new SQL database.
+  - Update the .env file with your database credentials.
+   ```bash
+        DB_NAME=yourdbname
+        DB_USER=yourdbuser
+        DB_PASS=yourdbpassword
+        DB_HOST=yourdbhost
+        DB_DIALECT=yourdbdialect
+    
+   ```
 
 4. Start the server:
 
-   npm start
+ ```bash
+      npm start
+   ```
