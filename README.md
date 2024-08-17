@@ -18,9 +18,16 @@ Welcome to the Timetable Scheduling App! This project is a full-stack web applic
   - React
   - Tailwind CSS
   - React Toastify
+  - formik
+  - yup
+  - axios 
+
 - **Backend**:
   - Node.js
   - Express.js
+  - cors 
+  - express-async-handler
+  
 - **Database**:
   - SQL
   - Sequelize ORM
@@ -40,15 +47,17 @@ Welcome to the Timetable Scheduling App! This project is a full-stack web applic
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/timetable-scheduling-app.git
+   git clone https://github.com/Saza-dev/Time-Table-Scheduling-App.git
 
    ```
 
 2. Install dependencies:
+
    cd timetable-scheduling-app
    npm install
 
 3. Set up the database:
+
    Create a new SQL database.
    Update the .env file with your database credentials.
    DB_NAME=yourdbname
@@ -58,4 +67,5 @@ Welcome to the Timetable Scheduling App! This project is a full-stack web applic
    DB_DIALECT=yourdbdialect
 
 4. Start the server:
+
    npm start
