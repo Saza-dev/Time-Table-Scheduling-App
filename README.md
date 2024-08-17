@@ -70,14 +70,13 @@ Welcome to the Timetable Scheduling App! This project is a full-stack web applic
 3. Set up the database:
 
   - Create a new SQL database.
-  - Update the .env file with your database credentials.
+  - Update the .env file with your database credentials in backend folder.
    ```bash
         DB_NAME=yourdbname
         DB_USER=yourdbuser
         DB_PASS=yourdbpassword
         DB_HOST=yourdbhost
-        DB_DIALECT=yourdbdialect
-    
+        PORT=yourPORTnumber
    ```
 
 4. Start the server:
