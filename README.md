@@ -51,10 +51,19 @@ Welcome to the Timetable Scheduling App! This project is a full-stack web applic
 
    ```
 
-2. Install dependencies:
+2. Install dependencies to frontend:
 
     ```bash
    cd timetable-scheduling-app
+   cd frontend
+   npm install
+   ```
+
+2. Install dependencies to backend:
+
+    ```bash
+   cd timetable-scheduling-app
+   cd backend
    npm install
    ```
 
