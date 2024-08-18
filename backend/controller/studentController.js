@@ -42,7 +42,7 @@ const getAllStudents = asyncHandler(async(req,res)=>{
 
 // get a Student
 const getAStudent = asyncHandler(async (req, res) => {
-const studentId = req.params._id;
+const studentId = req.params.id;
 
 const student = await Student.findOne({
     where: { studentId: studentId }

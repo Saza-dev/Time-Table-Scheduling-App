@@ -19,6 +19,10 @@ import AddBatch from "./Forms/Admin/AddBatch.jsx";
 import AddLectureHall from "./Forms/Admin/AddLectureHall.jsx";
 import AddCustomTime from "./Forms/Admin/AddCustomTime.jsx";
 import Profile from "./components/Profile.jsx";
+import LecDashboard from "./components/lecturerComponents/LecDashboard.jsx"
+import LecturerDashboard from "./pages/LecturerDashboard.jsx";
+import StudentDashboard from "./pages/StudentDashboard.jsx";
+import StuDashboard from "./components/studentComponents/StuDashboard.jsx"
 
 const router = createBrowserRouter([
   {
@@ -86,14 +90,38 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/student-dashboard",
+        path: "/student",
         element: <App />,
-        children: [],
+        children: [
+          {path:"/student",
+            element: <StudentDashboard/>,
+            children: [
+              {path:"/student/profile",
+                element: <Profile/>
+              },
+              {path:"/student/dashboard",
+                element: <StuDashboard/>
+              }
+            ]},
+
+        ],
       },
       {
-        path: "/lecturer-dashboard",
+        path: "/lecturer",
         element: <App />,
-        children: [],
+        children: [
+          {path:"/lecturer",
+            element: <LecturerDashboard/>,
+            children: [
+              {path:"/lecturer/profile",
+                element: <Profile/>
+              },
+              {path:"/lecturer/dashboard",
+                element: <LecDashboard/>
+              }
+            ]},
+
+        ],
       },
     ],
   },

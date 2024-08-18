@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import bg from "../assets/img1.png";
 import img2 from "../assets/img2.jpg";
-import { Link } from "react-router-dom";
+
 
 function SignIn() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+
+    // Simple routing logic based on the username
+    if (username === "admin") {
+      navigate("/admin/admin-dashboard/dashboard");
+    } else if (username === "student") {
+      navigate("/student/dashboard");
+    } else if (username === "lecturer") {
+      navigate("/lecturer/dashboard");
+    } else {
+      alert("Invalid username or password");
+    }
+  };
+
   return (
     <>
       {/* background image */}
@@ -14,7 +34,7 @@ function SignIn() {
       <div className="flex items-center justify-center w-full h-full">
         <div className="relative z-10 rounded-[6px] bg-white w-[1000px] h-[550px] mt-[150px]">
           <div className="flex flex-row">
-            {/* image in left */}
+            {/* image on the left */}
             <div className="mt-[60px]">
               <img
                 src={img2}
@@ -22,21 +42,23 @@ function SignIn() {
                 className="w-[500px] h-[490px] rounded-[6px]"
               />
             </div>
-            {/* blue line in mid */}
+            {/* blue line in the middle */}
             <div className="border-[2px] border-[#0066FF] h-[250px] mt-[170px] border-rad"></div>
 
-            {/* signin form */}
+            {/* sign-in form */}
             <div className="ml-[70px] mt-[100px]">
               <p className="mt-[20px] text-[30px] font-[800]">Sign In</p>
               <p className="text-[10px] font-semibold">
                 Please Sign In to continue
               </p>
-              <form action="" className="w-[300px] mt-12">
-                {/* email */}
+              <form onSubmit={handleSignIn} className="w-[300px] mt-12">
+                {/* email/username */}
                 <div>
                   <input
                     type="text"
-                    placeholder="Email"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     className="w-full h-[30px] border-[2px] border-gray-300 rounded mb-4 text-center"
                   />
                 </div>
@@ -45,6 +67,8 @@ function SignIn() {
                   <input
                     type="password"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full h-[30px] border-[2px] border-gray-300 rounded mb-4 text-center"
                   />
                 </div>
@@ -55,12 +79,10 @@ function SignIn() {
                     Keep Me Logged In
                   </label>
                 </div>
-                {/* sign in */}
-                <Link to="/admin/admin-dashboard/dashboard">
-                  <div className="w-full text-center mt-[35px] h-[30px] bg-[#0066FF] text-white rounded font-semibold">
-                    <button type="submit">SIGN IN</button>
-                  </div>
-                </Link>
+                {/* sign-in button */}
+                <div className="w-full text-center mt-[35px] h-[30px] bg-[#0066FF] text-white rounded font-semibold">
+                  <button type="submit">SIGN IN</button>
+                </div>
               </form>
             </div>
           </div>

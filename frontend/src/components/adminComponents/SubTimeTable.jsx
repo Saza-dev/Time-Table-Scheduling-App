@@ -95,7 +95,9 @@ function SubTimeTable(props) {
             </div>
           </div>
         ) : (
-          <p>No timetable data available for {selectedDay} check if you select the filters.</p>
+          <div className="w-[1000px] h-[300px] flex items-center justify-center">
+          <p className="text-[20px] font-[600]">No timetable data available</p>
+          </div>
         )}
       </div>
     </div>

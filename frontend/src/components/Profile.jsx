@@ -1,7 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import * as apiClient from "../api-client" 
+
 
 function Profile() {
+
+  let  studentID = "22ug1-0825"
+  let lecID = ""
+
+  let [name,setName] = useState("")
+  let [id,setID] = useState("")
+  let [dep,setDep] = useState("")
+  let [contact,setContact] = useState("")
+
+  useEffect(()=>{
+    const fetchStudentProfile = async() => {
+      try {
+        const x = await apiClient.getAStudent(studentID)
+        console.log(x)
+       setName(x.data.name)
+       setID(x.data.studentId)
+       setDep(x.data.department)
+       setContact(x.data.contactDetails)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    const fetchLecturerProfile = async() => {
+      try {
+        const x = await apiClient.getALecturer(lecID)
+        console.log(x)
+       setName(x.data.name)
+       setID(x.data.lecid)
+       setDep(x.data.department)
+       setContact(x.data.contactDetails)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+
+    if (studentID) {
+      fetchStudentProfile()
+    }
+    if (lecID) {
+      fetchLecturerProfile()
+    }
+    
+  },[])
+  
+
+
+
+
+
+
+
+
   return (
     <div className="flex items-center justify-center w-[1600px] h-full">
       <div className="w-[1200px] h-[750px] border-[1px]">
@@ -12,29 +68,20 @@ function Profile() {
         <div className="grid grid-cols-2 gap-10 mt-[80px] ml-[100px]">
           <div className="w-[333px] h-[73px]">
             <p className="text-[17px] font-[400]">Full Name</p>
-            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px]"></div>
+            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px] text-[16px] text-center pt-[10px]">{name}</div>
           </div>
           <div className="w-[333px] h-[73px]">
-            <p className="text-[17px] font-[400]">NIC</p>
-            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px]"></div>
-          </div>
-
-          <div className="w-[333px] h-[73px]">
-            <p className="text-[17px] font-[400]">Address</p>
-            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px]"></div>
-          </div>
-          <div className="w-[333px] h-[73px]">
-            <p className="text-[17px] font-[400]">Date Of Birth</p>
-            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px]"></div>
+            <p className="text-[17px] font-[400]">ID</p>
+            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px] text-[16px] text-center pt-[10px]">{id}</div>
           </div>
 
           <div className="w-[333px] h-[73px]">
-            <p className="text-[17px] font-[400]">Gender</p>
-            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px]"></div>
+            <p className="text-[17px] font-[400] ">Department</p>
+            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px] text-[16px] text-center pt-[10px]">{dep}</div>
           </div>
           <div className="w-[333px] h-[73px]">
             <p className="text-[17px] font-[400]">Contact Number</p>
-            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px]"></div>
+            <div className="w-[333px] h-[52px] border-[1px] rounded-[6px] text-[16px] text-center pt-[10px]">{contact}</div>
           </div>
         </div>
 

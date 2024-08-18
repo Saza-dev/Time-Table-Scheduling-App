@@ -31,8 +31,9 @@ const addLecturer = asyncHandler(async (req, res) => {
 // get a lecturer
 
 const getALecturer = asyncHandler(async (req, res) => {
-  const lecturerId = req.params._id;
 
+  const lecturerId = req.params.id;
+  console.log()
   const lecturer = await lecturerModel.findOne({
     where: {
       lecid: lecturerId,

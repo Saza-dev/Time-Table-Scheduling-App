@@ -100,6 +100,19 @@ export const getTimetableData = async (data) => {
   return response;
 };
 
+
+// get a student
+export const getAStudent = async (data)=> {
+  const response = await axios.get(`${host}/api/v1/student/get-a-student/${data}`)
+  return response
+}
+
+// get a lecturer 
+export const getALecturer = async(data)=> {
+  const response = await axios.get(`${host}/api/v1/lecturer/get-a-lecturer/${data}`)
+  return response
+}
+
 // Delete a Lecturer
 export const deleteALecturer = async (lecID) => {
   const response = await axios.delete(

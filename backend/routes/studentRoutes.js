@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.post("/add-student", addStudent)
 router.get("/get-all-students",getAllStudents)
-router.get("/get-a-student/:_id",getAStudent)
+router.get("/get-a-student/:id",getAStudent)
 router.put("/update-a-student/:_id",updateAStudent)
 router.delete("/delete-a-student/:id",deleteAStudent)
 
