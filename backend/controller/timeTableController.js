@@ -141,6 +141,21 @@ const timeSlots = asyncHandler(async (req, res) => {
   }
 });
 
+
+// delete all time tables
+const deleteAllTimeTables = asyncHandler(async (req, res) => {
+  try {
+    await TimeTable.destroy({
+      where: {},
+      truncate: true, // This will delete all records and reset the auto-incrementing primary keys
+    });
+    res.status(204).json({ message: "All timeTables deleted" });
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 export {
   addTimeTable,
   getAllTimeTables,
@@ -149,4 +164,5 @@ export {
   deleteATimeTable,
   dataset,
   timeSlots,
+  deleteAllTimeTables
 };

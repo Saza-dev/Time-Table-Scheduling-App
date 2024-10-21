@@ -2,25 +2,41 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bg from "../assets/img1.png";
 import img2 from "../assets/img2.jpg";
-
+import * as apiClient from "../api-client";
 
 function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
 
-    // Simple routing logic based on the username
-    if (username === "admin") {
-      navigate("/admin/admin-dashboard/dashboard");
-    } else if (username === "student") {
-      navigate("/student/dashboard");
-    } else if (username === "lecturer") {
-      navigate("/lecturer/dashboard");
-    } else {
-      alert("Invalid username or password");
+    try {
+      let data = {
+        user: username,
+        pass: password,
+      };
+      const x = await apiClient.getAUser(data);
+      console.log(x.data.user);
+      localStorage.setItem("Role", x.data.type);
+      // Add routing logic based on the user
+      if (x.data.type === "admin") {
+        localStorage.setItem("setID", "admin");
+        navigate("/admin/admin-dashboard/dashboard");
+      } else if (x.data.type === "student") {
+        localStorage.setItem("setID", x.data.user.studentId);
+        localStorage.setItem("batch",x.data.user.batchId)
+        localStorage.setItem("fac",x.data.user.department)
+        navigate("/student/dashboard");
+      } else if (x.data.type === "teacher") {
+        localStorage.setItem("setID", x.data.user.lecid);
+        navigate("/lecturer/dashboard");
+      } else {
+        alert("Invalid username or password");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

@@ -6,8 +6,8 @@ import * as apiClient from "../../api-client";
 
 function StuDashboard() {
     let  values = {
-        batchID: "Batch-09",
-        dep: "Faculty of Computing and IT"
+        batchID: localStorage.getItem("batch"),
+        dep: localStorage.getItem("fac")
     }
    
   let [data,setData] = useState([])

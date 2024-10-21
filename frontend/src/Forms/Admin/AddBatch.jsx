@@ -55,7 +55,7 @@ function AddBatch() {
           });
         }
       } catch (error) {
-        toast.error("Failed to add lecturer. Please try again.", {
+        toast.error("Failed to add batch. Please try again.", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,

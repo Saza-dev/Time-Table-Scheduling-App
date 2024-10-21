@@ -5,50 +5,48 @@ import * as apiClient from "../api-client"
 
 function Profile() {
 
-  let  studentID = "22ug1-0825"
-  let lecID = ""
 
   let [name,setName] = useState("")
   let [id,setID] = useState("")
   let [dep,setDep] = useState("")
   let [contact,setContact] = useState("")
 
-  useEffect(()=>{
-    const fetchStudentProfile = async() => {
-      try {
-        const x = await apiClient.getAStudent(studentID)
-        console.log(x)
-       setName(x.data.name)
-       setID(x.data.studentId)
-       setDep(x.data.department)
-       setContact(x.data.contactDetails)
-      } catch (error) {
-        console.log(error)
-      }
-    }
+  useEffect(() => {
+    const role = localStorage.getItem("Role");
+    const storedID = localStorage.getItem("setID"); // Correct key to retrieve ID
 
-    const fetchLecturerProfile = async() => {
-      try {
-        const x = await apiClient.getALecturer(lecID)
-        console.log(x)
-       setName(x.data.name)
-       setID(x.data.lecid)
-       setDep(x.data.department)
-       setContact(x.data.contactDetails)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-
-    if (studentID) {
-      fetchStudentProfile()
-    }
-    if (lecID) {
-      fetchLecturerProfile()
-    }
     
-  },[])
+
+    if (role === "student") {
+      const fetchStudentProfile = async () => {
+        try {
+          const response = await apiClient.getAStudent(storedID);
+          console.log(response);
+          setName(response.data.name);
+          setID(response.data.studentId);
+          setDep(response.data.department);
+          setContact(response.data.contactDetails);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchStudentProfile();
+    } else if (role === "teacher") {
+      const fetchLecturerProfile = async () => {
+        try {
+          const response = await apiClient.getALecturer(storedID);
+          console.log(response);
+          setName(response.data.name);
+          setID(response.data.lecid);
+          setDep(response.data.department);
+          setContact(response.data.contactDetails);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchLecturerProfile();
+    }
+  }, []);
   
 
 

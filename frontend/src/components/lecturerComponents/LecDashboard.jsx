@@ -7,7 +7,7 @@ import * as apiClient from "../../api-client";
 function Lecdashboard() {
 
    let  values = {
-        lecID : "001-JS" 
+        lecID : localStorage.getItem("setID")
     }
    
   let [data,setData] = useState([])

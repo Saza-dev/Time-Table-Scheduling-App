@@ -4,11 +4,15 @@ import axios from "axios";
 import { Bounce, toast} from "react-toastify";
 import * as apiClient from "../../api-client"
 
+const host = "http://localhost:5000";
 
 const handleClick = async () => {
+
+  console.log()
+  
   try {
     // Perform API request (replace with your actual endpoint and data)
-    const response = await axios.get('http://localhost:5000/api/v1/timeTable/generate-timetable');
+    const response = await axios.get(`${host}/api/v1/timeTable/generate-timetable`);
     
     let data = response.data
 
@@ -17,13 +21,13 @@ const handleClick = async () => {
 
 
     for (const entry of data) {
-      console.log(entry)
+    
 
       const [day, time] = entry.timeslot.split(' ');
       const [hour, minute] = time.split('.');
     
-      const fromTime = `${hour.padStart(2, '0')}:${minute.padEnd(2, '0')}:00`; // Example: "13:00:00"
-      const toTime = `${String(Number(hour) + 1).padStart(2, '0')}:${minute.padEnd(2, '0')}:00`; // Example: "14:00:00"
+      const fromTime = `${hour.padStart(2, '0')}:${minute.padEnd(2, '0')}:00`; 
+      const toTime = `${String(Number(hour) + 1).padStart(2, '0')}:${minute.padEnd(2, '0')}:00`;
 
       let values = {
         day: day,
@@ -69,6 +73,44 @@ const handleClick = async () => {
     toast.error(`Failed to create schedules: ${error.message}`);
 }
 };
+
+
+
+
+
+  const handleDeleteAll = async () => {
+    try {
+      const response = await axios.delete(`${host}/api/v1/timeTable/delete-all-timeTables`);
+      if (response.status == 204 ){
+        toast.info("All time table recodes deleted successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        })
+      }
+
+    
+    } catch (error) {
+      console.error("Error deleting timetables:", error);
+      toast.error("Failed to delete time table recodes.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      })
+    }
+  };
 
 
 
@@ -145,9 +187,12 @@ function AdminDashboardSubContainer() {
         </div>
     </div>
             {/* schedule button */}
-            <div className="flex w-[1400px] h-[150px] items-center justify-center">
+            <div className="flex w-[1400px] h-[150px] items-center justify-evenly">
             <button onClick={handleClick} className="w-[200px] h-[60px] bg-[#3482F7] text-white rounded-[6px] text-[20px] font-[700]">
                 Schedule
+            </button>
+            <button onClick={handleDeleteAll} className="w-[200px] h-[60px] bg-[#3482F7] text-white rounded-[6px] text-[20px] font-[700]">
+                Delete Time Tables
             </button>
       </div>
       </div>

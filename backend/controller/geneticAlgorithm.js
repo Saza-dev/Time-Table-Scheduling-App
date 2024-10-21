@@ -2,10 +2,27 @@ function initializePopulation(popSize, halls, lectures, timeslots) {
   let population = [];
   for (let i = 0; i < popSize; i++) {
     let chromosome = [];
+    const usedTimeslots = {}; // Track used timeslots for each hall
+
     lectures.forEach((lecture) => {
-      const randomHall = halls[Math.floor(Math.random() * halls.length)];
-      const randomTimeslot =
-        timeslots[Math.floor(Math.random() * timeslots.length)];
+      let randomHall, randomTimeslot;
+
+      // Ensure no conflicts with hall timeslot availability
+      do {
+        randomHall = halls[Math.floor(Math.random() * halls.length)];
+        randomTimeslot =
+          timeslots[Math.floor(Math.random() * timeslots.length)];
+      } while (
+        usedTimeslots[randomHall.hallName] &&
+        usedTimeslots[randomHall.hallName].includes(randomTimeslot)
+      );
+
+      // Add timeslot to hall's usage tracker
+      if (!usedTimeslots[randomHall.hallName]) {
+        usedTimeslots[randomHall.hallName] = [];
+      }
+      usedTimeslots[randomHall.hallName].push(randomTimeslot);
+
       chromosome.push({
         ...lecture,
         hallName: randomHall.hallName,
@@ -25,25 +42,26 @@ function fitnessFunction(chromosome, halls) {
   chromosome.forEach((class1) => {
     const hall = halls.find((hall) => hall.hallName === class1.hallName);
 
-    // Ensure room capacity is sufficient
+    // Check hall capacity
     if (class1.studentCount <= hall.capacity) {
       score++;
     }
 
-    // Track lecturer schedules to avoid conflicts
+    // Track lecturer schedules
     if (!lecturerSchedule[class1.lecturer]) {
       lecturerSchedule[class1.lecturer] = [];
     }
     lecturerSchedule[class1.lecturer].push(class1.timeslot);
 
-    // Avoid time conflicts for the same batch or lecturer
+    // Check for conflicts
     chromosome.forEach((class2) => {
       if (class1 !== class2) {
-        if (class1.batch === class2.batch && class1.timeslot === class2.timeslot) {
-          timeConflicts.add(class1.timeslot);
-        }
-
-        if (class1.lecturer === class2.lecturer && class1.timeslot === class2.timeslot) {
+        // Time conflict for batch or lecturer
+        if (
+          (class1.batch === class2.batch ||
+            class1.lecturer === class2.lecturer) &&
+          class1.timeslot === class2.timeslot
+        ) {
           timeConflicts.add(class1.timeslot);
         }
       }
@@ -82,10 +100,26 @@ function crossover(parent1, parent2) {
   return [child1, child2];
 }
 
-function mutate(chromosome, timeslots) {
+function mutate(chromosome, halls, timeslots) {
+  const usedTimeslots = {}; // Track used timeslots for each hall
   const index = Math.floor(Math.random() * chromosome.length);
-  chromosome[index].timeslot =
-    timeslots[Math.floor(Math.random() * timeslots.length)];
+  let randomTimeslot;
+
+  do {
+    randomTimeslot = timeslots[Math.floor(Math.random() * timeslots.length)];
+  } while (
+    usedTimeslots[chromosome[index].hallName] &&
+    usedTimeslots[chromosome[index].hallName].includes(randomTimeslot)
+  );
+
+  chromosome[index].timeslot = randomTimeslot;
+
+  // Update used timeslots for the hall
+  if (!usedTimeslots[chromosome[index].hallName]) {
+    usedTimeslots[chromosome[index].hallName] = [];
+  }
+  usedTimeslots[chromosome[index].hallName].push(randomTimeslot);
+
   return chromosome;
 }
 
@@ -101,8 +135,8 @@ function geneticAlgorithm(popSize, generations, halls, lectures, timeslots) {
         population[i],
         population[i + 1] || population[0]
       );
-      newPopulation.push(mutate(child1, timeslots));
-      newPopulation.push(mutate(child2, timeslots));
+      newPopulation.push(mutate(child1, halls, timeslots));
+      newPopulation.push(mutate(child2, halls, timeslots));
     }
 
     population = newPopulation;

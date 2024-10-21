@@ -128,3 +128,21 @@ export const deleteAStudent = async (stuID) => {
   );
   return response;
 };
+
+// delete all time table recodes 
+
+export const deleteAllTimeTables = async () => {
+  const response = await axios.delete(`${host}/login/delete-all-timeTables`);
+  return response;
+};
+
+
+
+// login 
+export const getAUser = async (data) => {
+  const response = await axios.get(`${host}/api/v1/login/get-a-user`, {
+    params: data,
+  });
+  return response;
+};
+

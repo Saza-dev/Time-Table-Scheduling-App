@@ -7,6 +7,7 @@ import {
   getAllTimeTables,
   getATimeTable,
   updateATimeTable,
+  deleteAllTimeTables,
   timeSlots,
 } from "../controller/timeTableController.js";
 import { geneticAlgorithm } from "../controller/geneticAlgorithm.js";
@@ -26,6 +27,8 @@ router.get("/get-a-timetable/:_id", getATimeTable);
 router.put("/update-a-timetable/:_id", updateATimeTable);
 
 router.delete("/delete-a-timetable/:_id", deleteATimeTable);
+
+router.delete("/delete-all-timeTables", deleteAllTimeTables); 
 
 router.get("/datasetIDs", dataset);
 
